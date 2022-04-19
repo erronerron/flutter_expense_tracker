@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/routes.dart';
+import 'package:provider/provider.dart';
+import 'provider/test_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<TestProvider>(
+    child: const MyApp(),
+    create: (_) => TestProvider(), // Create a new ChangeNotifier object
+  ));
 }
 
 class MyApp extends StatelessWidget {

@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
-class ExpenseScreen extends StatelessWidget {
+class ExpenseScreen extends StatefulWidget {
   const ExpenseScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ExpenseScreen> createState() => _ExpenseScreenState();
+}
+
+class _ExpenseScreenState extends State<ExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expenses'),
-        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              child: const Text('Go to home'),
-            )
+          children: const [
+            Text('Expenses'),
           ],
         ),
       ),
