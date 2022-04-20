@@ -58,6 +58,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     contentPadding: const EdgeInsets.all(8.0),
                     title: Text(snapshot.data![index].description),
                     subtitle: Text(snapshot.data![index].amount.toString()),
+                    trailing: ElevatedButton(
+                      onPressed: () async {
+                        await handler.deleteExpense(snapshot.data![index].id);
+                        setState(() {});
+                      },
+                      child: const Icon(Icons.delete),
+                    ),
                   ),
                 );
               },
