@@ -1,21 +1,8 @@
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/expense.dart';
+import '../controllers/database_controller.dart';
 
-class DataBase {
-  Future<Database> initializedDB() async {
-    String path = await getDatabasesPath();
-    return openDatabase(
-      join(path, 'expenses.db'),
-      version: 1,
-      onCreate: (Database db, int version) async {
-        await db.execute(
-          "CREATE TABLE expenses(id INTEGER PRIMARY KEY , description TEXT NOT NULL,amount INTEGER NOT NULL)",
-        );
-      },
-    );
-  }
-
+class ExpenseController extends DatabaseController {
   // insert data
   Future<int> insertExpenses(List<Expense> expenses) async {
     int result = 0;
@@ -24,7 +11,6 @@ class DataBase {
       result = await db.insert('expenses', expense.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     }
-
     return result;
   }
 
@@ -35,7 +21,7 @@ class DataBase {
     return queryResult.map((e) => Expense.fromMap(e)).toList();
   }
 
-  // delete user
+  // delete data
   Future<void> deleteExpense(int id) async {
     final db = await initializedDB();
     await db.delete(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expense_tracker/utils/database_helper.dart';
+import 'package:flutter_expense_tracker/controllers/expense_controller.dart';
 import '../../models/expense.dart';
 
 class ExpenseScreen extends StatefulWidget {
@@ -10,15 +10,49 @@ class ExpenseScreen extends StatefulWidget {
 }
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
-  late DataBase handler;
+  late ExpenseController expenseHandler;
 
   Future<int> addExpenses() async {
-    Expense firstExpense = Expense(id: 1, description: "Food", amount: 24);
-    Expense secondExpense = Expense(id: 2, description: "Transpo", amount: 31);
-    Expense thirdExpense =
-        Expense(id: 3, description: 'Electricity', amount: 4);
-    Expense fourthExpense = Expense(id: 4, description: 'Water', amount: 5);
-    Expense fifthExpense = Expense(id: 5, description: 'Sumthin', amount: 5);
+    Expense firstExpense = Expense(
+        id: 1,
+        categoryId: 1,
+        description: "Food",
+        amount: 24,
+        paidAt: DateTime.now().toString(),
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString());
+    Expense secondExpense = Expense(
+        id: 2,
+        categoryId: 1,
+        description: "Transpo",
+        amount: 31,
+        paidAt: DateTime.now().toString(),
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString());
+    Expense thirdExpense = Expense(
+        id: 3,
+        categoryId: 1,
+        description: 'Electricity',
+        amount: 4,
+        paidAt: DateTime.now().toString(),
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString());
+    Expense fourthExpense = Expense(
+        id: 4,
+        categoryId: 1,
+        description: 'Water',
+        amount: 5,
+        paidAt: DateTime.now().toString(),
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString());
+    Expense fifthExpense = Expense(
+        id: 5,
+        categoryId: 1,
+        description: 'Sumthin',
+        amount: 5,
+        paidAt: DateTime.now().toString(),
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString());
 
     List<Expense> expenses = [
       firstExpense,
@@ -27,14 +61,14 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
       fourthExpense,
       fifthExpense
     ];
-    return await handler.insertExpenses(expenses);
+    return await expenseHandler.insertExpenses(expenses);
   }
 
   @override
   void initState() {
     super.initState();
-    handler = DataBase();
-    handler.initializedDB().whenComplete(() async {
+    expenseHandler = ExpenseController();
+    expenseHandler.initializedDB().whenComplete(() async {
       await addExpenses();
       setState(() {});
     });
@@ -47,7 +81,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         title: const Text('Expenses'),
       ),
       body: FutureBuilder(
-        future: handler.retrieveExpenses(),
+        future: expenseHandler.retrieveExpenses(),
         builder: (BuildContext context, AsyncSnapshot<List<Expense>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -56,11 +90,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 return Card(
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(8.0),
-                    title: Text(snapshot.data![index].description),
+                    title: Text(snapshot.data![index].description +
+                        snapshot.data![index].paidAt),
                     subtitle: Text(snapshot.data![index].amount.toString()),
                     trailing: ElevatedButton(
                       onPressed: () async {
-                        await handler.deleteExpense(snapshot.data![index].id);
+                        await expenseHandler
+                            .deleteExpense(snapshot.data![index].id);
                         setState(() {});
                       },
                       child: const Icon(Icons.delete),
