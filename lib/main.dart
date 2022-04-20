@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'provider/test_provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(ChangeNotifierProvider<TestProvider>(
     child: const MyApp(),
     create: (_) => TestProvider(), // Create a new ChangeNotifier object
