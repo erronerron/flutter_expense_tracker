@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/provider/test_provider.dart';
+import 'package:flutter_expense_tracker/controllers/database_controller.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,6 +11,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late DatabaseController databaseHandler;
+
+  @override
+  void initState() {
+    super.initState();
+    databaseHandler = DatabaseController();
+    databaseHandler.initializedDB();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _myList = context.watch<TestProvider>().tests;
