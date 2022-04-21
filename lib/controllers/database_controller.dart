@@ -25,7 +25,7 @@ class DatabaseController {
           "CREATE TABLE expenses(id INTEGER PRIMARY KEY, description TEXT NOT NULL, amount INTEGER NOT NULL, paidAt TEXT NOT NULL, createdAt TEXT NOT NULL, updatedAt TEXT NOT NULL, categoryId INTEGER NOT NULL, FOREIGN KEY(categoryId) REFERENCES categories(id))",
         );
         await db.execute(
-          "CREATE TABLE incomes(id INTEGER PRIMARY KEY, description TEXT NOT NULL, amount INTEGER NOT NULL, startDate TEXT NOT NULL, endDate TEXT NOT NULL, createdAt TEXT NOT NULL, updatedAt TEXT NOT NULL)",
+          "CREATE TABLE incomes(id INTEGER PRIMARY KEY, description TEXT NOT NULL, amount INTEGER NOT NULL, date TEXT NOT NULL, createdAt TEXT NOT NULL, updatedAt TEXT NOT NULL)",
         );
         await db.execute(
           "CREATE TABLE spending_limits(id INTEGER PRIMARY KEY, amount INTEGER NOT NULL, startDate TEXT NOT NULL, endDate TEXT NOT NULL, createdAt TEXT NOT NULL, updatedAt TEXT NOT NULL)",
