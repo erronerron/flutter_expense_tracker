@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../models/expense.dart';
+import '../models/expense_copy.dart';
 import '../controllers/database_controller.dart';
 
 class ExpenseController extends DatabaseController {
